@@ -1,5 +1,14 @@
+import { Controls } from './components/Controls/Controls';
+import { MatrixTable } from './components/MatrixTable';
+import styles from './App.module.css';
+
 function App() {
-	return <div>Hello world</div>;
+	return (
+		<div className={styles.container}>
+			<Controls />
+			<MatrixTable />
+		</div>
+	);
 }
 
 export default App;
