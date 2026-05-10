@@ -1,5 +1,5 @@
 import { Controls } from './components/Controls/Controls';
-import { MatrixTable } from './components/MatrixTable';
+import { MatrixTable } from './components/MatrixTable/MatrixTable';
 import styles from './App.module.css';
 
 function App() {

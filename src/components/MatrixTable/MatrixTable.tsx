@@ -1,26 +1,15 @@
-import { useEffect, useMemo, useState } from 'react';
-import { useMatrixData } from '../hooks/useMatrixData';
-import { MatrixRow } from './MatrixRow';
-import { getPercentile } from '../utils/getPercentile';
-import { DEBOUNCE_DELAY, PERCENTILE } from '../constants/matrixConfig';
+import { useMemo, useState } from 'react';
+import { useMatrixData } from '../../hooks/useMatrixData';
+import { MatrixRow } from '../MatrixRow';
+import { getPercentile } from '../../utils/getPercentile';
+import { DEBOUNCE_DELAY, PERCENTILE } from '../../constants/matrixConfig';
+import styles from './MatrixTable.module.css';
+import { useDebouncedValue } from '../../hooks/useDebouncedValue';
 
 export function MatrixTable() {
 	const { matrix, columnCount } = useMatrixData();
 	const [hoveredCellId, setHoveredCellId] = useState<number | null>(null);
-	const [debouncedHoveredCellId, setDebouncedHoveredCellId] = useState<number | null>(null);
-
-	useEffect(() => {
-		if (hoveredCellId === null) {
-			setDebouncedHoveredCellId(null);
-			return;
-		}
-
-		const timeout = setTimeout(() => {
-			setDebouncedHoveredCellId(hoveredCellId);
-		}, DEBOUNCE_DELAY);
-
-		return () => clearTimeout(timeout);
-	}, [hoveredCellId]);
+	const debouncedHoveredCellId = useDebouncedValue(hoveredCellId, DEBOUNCE_DELAY);
 
 	const columnPercentiles = useMemo(() => {
 		if (!matrix.length) {
@@ -55,15 +44,14 @@ export function MatrixTable() {
 					distance: Math.abs(cell.amount - hoveredCell.amount),
 				}))
 				.sort((a, b) => a.distance - b.distance)
-				// .slice(0, hoveredCell.amount)
-				.slice(0, 3) //TODO: change
+				.slice(0, hoveredCell.amount)
 				.map((cell) => cell.id),
 		);
 	}, [allCells, hoveredCell]);
 
 	return (
-		<div style={{ display: 'flex', overflowX: 'auto', whiteSpace: 'nowrap', width: '100%' }}>
-			<table style={{ borderCollapse: 'collapse', flex: '0 0 auto', marginLeft: 'auto', marginRight: 'auto' }}>
+		<div className={styles.container}>
+			<table className={styles.table}>
 				<tbody>
 					{matrix.map((row) => (
 						<MatrixRow row={row} key={row.id} nearestCellIds={nearestCellIds} setHoveredCellId={setHoveredCellId} />
@@ -72,7 +60,7 @@ export function MatrixTable() {
 				<tfoot>
 					<tr>
 						{columnPercentiles.map((percentile, index) => (
-							<td key={index} style={{ border: '1px solid #ccc', padding: '8px' }}>
+							<td key={index} className={styles.columnPercentile}>
 								{percentile}
 							</td>
 						))}

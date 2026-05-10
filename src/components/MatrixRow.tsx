@@ -1,8 +1,7 @@
 import { memo, useCallback, useMemo, useState } from 'react';
 import type { Row } from '../types/Matrix';
-import { MatrixCell } from './MatrixCell';
-import { useMatrixActions } from '../hooks/useMatrixActions';
-import { SumCell } from './SumCell';
+import { MatrixCell } from './MatrixCell/MatrixCell';
+import { SumCell } from './SumCell/SumCell';
 
 interface Props {
 	row: Row;
@@ -11,7 +10,6 @@ interface Props {
 }
 
 const RowComponent = ({ row, nearestCellIds, setHoveredCellId }: Props) => {
-	const { removeRow } = useMatrixActions();
 	const [hoveredSumRowId, setHoveredSumRowId] = useState<number | null>(null);
 
 	const isRowHovered = useMemo(() => hoveredSumRowId === row.id, [hoveredSumRowId, row.id]);
@@ -45,10 +43,12 @@ const RowComponent = ({ row, nearestCellIds, setHoveredCellId }: Props) => {
 					onMouseLeave={() => setHoveredCellId(null)}
 				/>
 			))}
-			<SumCell cellAmount={rowSum} onMouseEnter={() => onSumHover(row.id)} onMouseLeave={() => onSumHover(null)} />
-			<td>
-				rowID:{row.id} <button onClick={() => removeRow(row.id)}>Remove</button>
-			</td>
+			<SumCell
+				cellAmount={rowSum}
+				onMouseEnter={() => onSumHover(row.id)}
+				onMouseLeave={() => onSumHover(null)}
+				rowId={row.id}
+			/>
 		</tr>
 	);
 };

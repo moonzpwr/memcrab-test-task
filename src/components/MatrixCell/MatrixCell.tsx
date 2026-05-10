@@ -1,6 +1,7 @@
 import { memo } from 'react';
-import type { Cell } from '../types/Matrix';
-import { useMatrixActions } from '../hooks/useMatrixActions';
+import type { Cell } from '../../types/Matrix';
+import { useMatrixActions } from '../../hooks/useMatrixActions';
+import styles from './MatrixCell.module.css';
 
 interface Props {
 	cell: Cell;
@@ -25,21 +26,17 @@ const CellComponent = ({
 
 	return (
 		<td
+			className={`${styles.cell} ${isHighlighted ? styles.highlightedCell : ''}`}
 			style={{
-				border: '1px solid #ccc',
-				padding: '8px',
-				textAlign: 'center',
-				userSelect: 'none',
 				background: isRowHovered
 					? `linear-gradient(90deg, tomato ${heatmap}%, transparent ${heatmap}%)`
 					: 'transparent',
-				backgroundColor: isHighlighted ? 'yellow' : 'transparent',
 			}}
 			onClick={() => incrementCell(cell.id)}
 			onMouseEnter={onMouseEnter}
 			onMouseLeave={onMouseLeave}
 		>
-			ID: {cell.id}, Value: {isRowHovered ? `${Math.round(percentage)}%` : cell.amount}
+			{isRowHovered ? `${Math.round(percentage)}%` : cell.amount}
 		</td>
 	);
 };

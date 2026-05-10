@@ -1,4 +1,5 @@
 .container {
+	font-family: 'Google Sans Flex', sans-serif;
 	padding: 20px;
 	display: flex;
 	flex-direction: column;

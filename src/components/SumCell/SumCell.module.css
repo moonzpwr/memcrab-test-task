@@ -1,0 +1,39 @@
+.sumCell {
+	border: 1px solid #ccc;
+	padding: 8px;
+	text-align: center;
+	display: flex;
+	align-items: center;
+	justify-content: space-around;
+	width: 150px;
+}
+
+.deleteSvg {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 24px;
+	height: 24px;
+	border: none;
+	background: transparent;
+	cursor: pointer;
+	fill: white;
+}
+
+.button {
+	padding: 5px;
+	background-color: #1d4ed8;
+	cursor: pointer;
+	border: none;
+	border-radius: 8px;
+	transition: all 0.2s ease;
+	box-shadow:
+		0 4px 6px -1px rgba(0, 0, 0, 0.1),
+		0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+.button:hover {
+	background-color: #1d4ed8;
+	transform: translateY(-1px);
+	box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+}
