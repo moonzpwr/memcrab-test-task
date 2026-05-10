@@ -24,7 +24,6 @@ export function MatrixProvider({ children }: { children: React.ReactNode }) {
 				amount: randomValue(),
 			};
 		});
-		console.log('Adding row with ID:', rowId, 'and cells:', cells);
 
 		const row: Row = {
 			id: rowId,

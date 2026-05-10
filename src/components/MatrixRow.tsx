@@ -1,15 +1,16 @@
 import { memo, useCallback, useMemo, useState } from 'react';
 import type { Row } from '../types/Matrix';
-import { MatrixCell } from './MtrixCell';
+import { MatrixCell } from './MatrixCell';
 import { useMatrixActions } from '../hooks/useMatrixActions';
-import { MAX_ROWS } from '../constants/matrixConfig';
 import { SumCell } from './SumCell';
 
 interface Props {
 	row: Row;
+	nearestCellIds: Set<number>;
+	setHoveredCellId: (cellId: number | null) => void;
 }
 
-const RowComponent = ({ row }: Props) => {
+const RowComponent = ({ row, nearestCellIds, setHoveredCellId }: Props) => {
 	const { removeRow } = useMatrixActions();
 	const [hoveredSumRowId, setHoveredSumRowId] = useState<number | null>(null);
 
@@ -39,7 +40,9 @@ const RowComponent = ({ row }: Props) => {
 					isRowHovered={isRowHovered}
 					percentage={percentage}
 					heatmap={heatmap}
-					isClickable
+					isHighlighted={nearestCellIds.has(cell.id)}
+					onMouseEnter={() => setHoveredCellId(cell.id)}
+					onMouseLeave={() => setHoveredCellId(null)}
 				/>
 			))}
 			<SumCell cellAmount={rowSum} onMouseEnter={() => onSumHover(row.id)} onMouseLeave={() => onSumHover(null)} />
