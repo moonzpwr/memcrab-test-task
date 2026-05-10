@@ -100,7 +100,7 @@ Users can:
 
 ### Architecture Overview
 
-## State Structure
+#### State Structure
 
 - Matrix state: main source of truth
 - UI state:
@@ -113,7 +113,7 @@ Users can:
   - heatmap values
   - row percentages
 
-## Design Principles
+#### Design Principles
 
 - Immutable state updates
 - Separation of concerns (state vs derived data vs UI state)
@@ -121,14 +121,14 @@ Users can:
 - Memoized calculations where needed
 - Stable identifiers for rows and cells
 
-## Performance Considerations
+#### Performance Considerations
 
 - Debounced hover-based computations for nearest cell search
 - useMemo used for expensive derived calculations
 - Stable row and cell IDs prevent unnecessary re-renders
 - React.memo applied to row and cell components
 
-## Key Implementation Notes
+#### Key Implementation Notes
 
 - Row identity is based on row.id, not array index
 - Cell identity is based on unique cell.id
