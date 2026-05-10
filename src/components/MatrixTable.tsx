@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import { useMatrixData } from '../hooks/useMatrixData';
 import { MatrixRow } from './MatrixRow';
 import { getPercentile } from '../utils/getPercentile';

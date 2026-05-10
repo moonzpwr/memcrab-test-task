@@ -47,8 +47,32 @@ export function MatrixProvider({ children }: { children: React.ReactNode }) {
 		setMatrix(result.matrix);
 	}, []);
 
+	const incrementCell = useCallback((cellId: number) => {
+		setMatrix((prev) =>
+			prev.map((row) => {
+				const hasTargetCell = row.cells.some((cell) => cell.id === cellId);
+
+				if (!hasTargetCell) {
+					return row;
+				}
+
+				return {
+					...row,
+					cells: row.cells.map((cell) =>
+						cell.id === cellId
+							? {
+									...cell,
+									amount: cell.amount + 1,
+								}
+							: cell,
+					),
+				};
+			}),
+		);
+	}, []);
+
 	return (
-		<MatrixActionsContext.Provider value={{ addRow, removeRow, generateMatrix }}>
+		<MatrixActionsContext.Provider value={{ addRow, removeRow, generateMatrix, incrementCell }}>
 			<MatrixDataContext.Provider value={{ matrix, columnCount }}>{children}</MatrixDataContext.Provider>
 		</MatrixActionsContext.Provider>
 	);
