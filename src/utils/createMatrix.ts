@@ -1,5 +1,5 @@
 import type { Matrix } from '../types/Matrix';
-import { randomValue } from './generateRandomValue';
+import { randomValue } from './randomValue';
 
 interface CreateMatrixResult {
 	matrix: Matrix;
@@ -7,14 +7,9 @@ interface CreateMatrixResult {
 	nextRowId: number;
 }
 
-export const createMatrix = (
-	rows: number,
-	columns: number,
-	startCellId: number,
-	startRowId: number,
-): CreateMatrixResult => {
-	let nextCellId = startCellId;
-	let nextRowId = startRowId;
+export const createMatrix = (rows: number, columns: number): CreateMatrixResult => {
+	let nextCellId = 1;
+	let nextRowId = 1;
 
 	const matrix: Matrix = Array.from({ length: rows }, () => ({
 		id: nextRowId++,

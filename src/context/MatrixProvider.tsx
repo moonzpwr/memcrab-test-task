@@ -1,6 +1,6 @@
 import { useCallback, useRef, useState } from 'react';
 import type { Matrix, Row } from '../types/Matrix';
-import { randomValue } from '../utils/generateRandomValue';
+import { randomValue } from '../utils/randomValue';
 import { MatrixDataContext } from './DataContext';
 import { MatrixActionsContext } from './ActionsContext';
 import { createMatrix } from '../utils/createMatrix';
@@ -38,7 +38,7 @@ export function MatrixProvider({ children }: { children: React.ReactNode }) {
 	}, []);
 
 	const generateMatrix = useCallback((rows: number, columns: number) => {
-		const result = createMatrix(rows, columns, 1, 1);
+		const result = createMatrix(rows, columns);
 		setColumnCount(result.matrix[0]?.cells.length ?? 0);
 		nextCellIdRef.current = result.nextCellId;
 		nextRowIdRef.current = result.nextRowId;
