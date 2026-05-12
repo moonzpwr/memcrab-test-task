@@ -23,15 +23,12 @@ const CellComponent = ({
 	isHighlighted,
 }: Props) => {
 	const { incrementCell } = useMatrixActions();
+	const opacity = 0.15 + (heatmap / 100) * 0.85;
 
 	return (
 		<td
 			className={`${styles.cell} ${isHighlighted ? styles.highlightedCell : ''}`}
-			style={{
-				background: isRowHovered
-					? `linear-gradient(90deg, tomato ${heatmap}%, transparent ${heatmap}%)`
-					: 'transparent',
-			}}
+			style={{ backgroundColor: isRowHovered ? `rgba(255, 99, 71, ${opacity})` : undefined }}
 			onClick={() => incrementCell(cell.id)}
 			onMouseEnter={onMouseEnter}
 			onMouseLeave={onMouseLeave}

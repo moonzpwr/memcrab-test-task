@@ -7,7 +7,7 @@ import styles from './MatrixTable.module.css';
 import { useDebouncedValue } from '../../hooks/useDebouncedValue';
 
 export function MatrixTable() {
-	const { matrix, columnCount } = useMatrixData();
+	const { matrix, columnCount, x } = useMatrixData();
 	const [hoveredCellId, setHoveredCellId] = useState<number | null>(null);
 	const debouncedHoveredCellId = useDebouncedValue(hoveredCellId, DEBOUNCE_DELAY);
 
@@ -32,7 +32,7 @@ export function MatrixTable() {
 	}, [allCells, debouncedHoveredCellId]);
 
 	const nearestCellIds = useMemo(() => {
-		if (!hoveredCell) {
+		if (!hoveredCell || !x) {
 			return new Set<number>();
 		}
 
@@ -44,10 +44,10 @@ export function MatrixTable() {
 					distance: Math.abs(cell.amount - hoveredCell.amount),
 				}))
 				.sort((a, b) => a.distance - b.distance)
-				.slice(0, hoveredCell.amount)
+				.slice(0, x)
 				.map((cell) => cell.id),
 		);
-	}, [allCells, hoveredCell]);
+	}, [allCells, hoveredCell, x]);
 
 	return (
 		<div className={styles.container}>

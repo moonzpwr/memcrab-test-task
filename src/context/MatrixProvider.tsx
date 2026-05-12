@@ -8,6 +8,7 @@ import { createMatrix } from '../utils/createMatrix';
 export function MatrixProvider({ children }: { children: React.ReactNode }) {
 	const [matrix, setMatrix] = useState<Matrix>([]);
 	const [columnCount, setColumnCount] = useState(0);
+	const [x, setX] = useState<number | null>(null);
 	const nextCellIdRef = useRef<number>(1);
 	const nextRowIdRef = useRef<number>(1);
 
@@ -71,8 +72,8 @@ export function MatrixProvider({ children }: { children: React.ReactNode }) {
 	}, []);
 
 	return (
-		<MatrixActionsContext.Provider value={{ addRow, removeRow, generateMatrix, incrementCell }}>
-			<MatrixDataContext.Provider value={{ matrix, columnCount }}>{children}</MatrixDataContext.Provider>
+		<MatrixActionsContext.Provider value={{ addRow, removeRow, generateMatrix, incrementCell, setX }}>
+			<MatrixDataContext.Provider value={{ matrix, columnCount, x }}>{children}</MatrixDataContext.Provider>
 		</MatrixActionsContext.Provider>
 	);
 }
